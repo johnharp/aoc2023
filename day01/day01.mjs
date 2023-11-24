@@ -1,9 +1,13 @@
-import { readGroupsOfNumbers } from "../util/input.mjs";
+import { readGroupsOfLines } from "../util/input.mjs";
 import { sumArray, sumArrayN } from "../util/calc.mjs";
 
 
 export function solve() {
-    const input = readGroupsOfNumbers("day01/input.txt");
+    const rawInput = readGroupsOfLines("day01/input.txt");
+
+    // parse the raw input into integers
+    const input = rawInput.map(group => 
+        group.map(item => parseInt(item)));
 
     const sums = input.map(sumArray);
     const sortedSums = sums.sort((a, b) => b-a);

@@ -1,32 +1,27 @@
 import * as fs from "fs";
 
-/**
- * Expects an input file of this form:
-    1000
-    2000
-    3000
 
-    4000
-
-    5000
-    6000
- * returns
-   [
-    [ 1000, 2000, 3000 ],
-    [ 4000 ],
-    [ 5000, 6000 ]
-   ]
- * @param {string} fileName 
- */
-export function readGroupsOfNumbers(fileName) {
-    let lines = fs
+function read(fileName) {
+    const input = fs
         .readFileSync(fileName, "utf8")
         .toString()
-        .trim()
-        .split("\n\n");
-    let input = lines.map(l => 
-        l.split("\n").map(i => Number(i)));
-
+        .trim();
     return input;
+}
+
+export function readLines(fileName) {
+    const input = read(fileName);
+    const lines = input.split("\n");
+
+    return lines;
+}
+
+export function readGroupsOfLines(fileName) {
+    const input = read(fileName);
+    const groups = input.split("\n\n");
+    const groupsOfLines = groups.map(group => 
+        group.split("\n"));
+    
+    return groupsOfLines;
 }
 
