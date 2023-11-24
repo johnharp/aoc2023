@@ -1,9 +1,9 @@
-import { readGroupsOfLines } from "../util/input.mjs";
-import { sumArray, sumArrayN } from "../util/calc.mjs";
+import { readGroupsOfLines } from "../util/input.js";
+import { sumArray, sumArrayN } from "../util/calc.js";
 
 
-export function solve() {
-    const rawInput = readGroupsOfLines("day01/input.txt");
+export function solve(filename) {
+    const rawInput = readGroupsOfLines(filename);
 
     // parse the raw input into integers
     const input = rawInput.map(group => 
@@ -18,4 +18,4 @@ export function solve() {
     return [part1, part2];
 }
 
-console.log(solve());
+console.log(solve("day01/input.txt"));
