@@ -11,7 +11,6 @@ export function solve(filename) {
         "1", "2", "3", "4", "5", "6", "7", "8", "9"
     ];
 
-
     const part1 = rawInput
         .map(line => [findOne(line, numbers, true), findOne(line, numbers, false)])
         .map(vals => `${vals[0]}${vals[1]}`)

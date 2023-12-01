@@ -4,8 +4,10 @@
   "description": "Advent of Code 2023",
   "main": "index.js",
   "type": "module",
-  "scripts": {
-  },
+  "scripts": {},
   "author": "John Harper <john@harper.link> (https://harper.link/)",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^8.54.0"
+  }
 }
