@@ -1,21 +1,77 @@
-import { readGroupsOfLines } from "../util/input.js";
+import { readLines } from "../util/input.js";
 import { sumArray, sumArrayN } from "../util/calc.js";
 
 
 export function solve(filename) {
-    const rawInput = readGroupsOfLines(filename);
+    const rawInput = readLines(filename);
+    const names = [
+        "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"
+    ];
+    const numbers = [
+        "1", "2", "3", "4", "5", "6", "7", "8", "9"
+    ];
 
-    // parse the raw input into integers
-    const input = rawInput.map(group => 
-        group.map(item => parseInt(item)));
 
-    const sums = input.map(sumArray);
-    const sortedSums = sums.sort((a, b) => b-a);
-    
-    const part1 = sortedSums[0];
-    const part2 = sumArrayN(sortedSums, 3);
+    const part1 = rawInput
+        .map(line => [findOne(line, numbers, true), findOne(line, numbers, false)])
+        .map(vals => `${vals[0]}${vals[1]}`)
+        .map(val => Number(val))
+        .reduce((sum, val) => sum += val, 0);
+
+    const part2 = rawInput
+        .map(line => [
+            findOne(line, [...numbers, ...names], true),
+            findOne(line, [...numbers, ...names], false)
+        ])
+        .map(vals => `${vals[0]}${vals[1]}`)
+        .map(val => replaceAllNames(val, names))
+        .reduce((sum, val) => sum += Number(val), 0);
 
     return [part1, part2];
+}
+
+function replaceAllNames(s, names) {
+    for (let i = 0; i<names.length; i++) {
+        s = s.replaceAll(names[i], `${i+1}`);
+    }
+    return s;
+}
+
+function lineToValue(line) {
+    const chars =  line
+        .replace(/\D/g,'')
+        .split( "" );
+    const val = Number(chars[0] + chars[chars.length-1]);
+
+    return val;
+}
+
+function findOne(line, patterns, forward) {
+    const start = forward ? 0 : line.length;
+    const end = forward ? line.length + 1 : -1;
+    const incr = forward ? 1 : -1;
+
+    for (let i = start; i !== end; i += incr) {
+        const match = matchAnyAt(line, patterns, i);
+        if (match) return match;
+    }
+
+    return undefined;
+}
+
+function matchAt(line, pattern, index) {
+    for (let i = 0; i<pattern.length; i++) {
+        if (line[index + i] !== pattern[i]) return false;
+    }
+    return true;
+}
+
+function matchAnyAt(line, patterns, index) {
+    for (const pattern of patterns) {
+        if (matchAt(line, pattern, index)) return pattern;
+    }
+
+    return undefined;
 }
 
 console.log(solve("day01/input.txt"));
