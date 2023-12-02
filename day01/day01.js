@@ -1,5 +1,4 @@
 import { readLines } from "../util/input.js";
-import { sumArray, sumArrayN } from "../util/calc.js";
 
 
 export function solve(filename) {
@@ -34,15 +33,6 @@ function replaceAllNames(s, names) {
         s = s.replaceAll(names[i], `${i+1}`);
     }
     return s;
-}
-
-function lineToValue(line) {
-    const chars =  line
-        .replace(/\D/g,'')
-        .split( "" );
-    const val = Number(chars[0] + chars[chars.length-1]);
-
-    return val;
 }
 
 function findOne(line, patterns, forward) {
