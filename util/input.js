@@ -1,7 +1,7 @@
 import * as fs from "fs";
 
 
-function read(fileName) {
+export function read(fileName) {
     const input = fs
         .readFileSync(fileName, "utf8")
         .toString()
