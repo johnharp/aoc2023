@@ -66,12 +66,12 @@ export function solve(filename) {
     return [part1, part2];
 }
 
-function part2endCondition(ns) {
-    const zs = ns.filter(n => n.endsWith("Z"));
+// function part2endCondition(ns) {
+//     const zs = ns.filter(n => n.endsWith("Z"));
 
-    if (zs.length === ns.length) return true;
-    else return false;
-}
+//     if (zs.length === ns.length) return true;
+//     else return false;
+// }
 
 function parseNode(s) {
     let [name, contents] = s.split(" = ");
@@ -91,17 +91,13 @@ function numStepsUnitEnd(graph, directions, node) {
     let i = 0;
     let current = node;
 
-    while (true) {
+    while (!current.endsWith("Z")) {
         steps++;
         const dir = directions[i];
         i++;
         if (i >= directions.length) i = 0;
 
         current = graph.get(current)[dir];
-
-        if  (current.endsWith("Z")) {
-            break;
-        }
     }
     return steps;
 }
