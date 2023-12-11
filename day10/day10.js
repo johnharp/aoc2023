@@ -42,8 +42,6 @@ export function solve(filename) {
         starttype = "J";
     } else if (grid.connectsRight(left) && grid.connectsUp(down)) {
         starttype = "7";
-    } else if (grid.connectsRight(left) && grid.connectsLeft(right)) {
-        starttype = "-";
     } else if (grid.connectsDown(up) && grid.connectsUp(down)) {
         starttype = "|";
     }
