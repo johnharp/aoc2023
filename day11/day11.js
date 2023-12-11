@@ -19,45 +19,53 @@ export function solve(filename) {
         }
     }
 
-    expand(rowcounts);
-    expand(colcounts);
+    const colexpansions = calcExpansionPoints(colcounts);
+    const rowexpansions = calcExpansionPoints(rowcounts);
 
-    let sum = 0;
-    for (let col=0; col < colcounts.length - 1; col++) {
-        if (colcounts[col] !== undefined) {
-            for (let col2 = col+1; col2 < colcounts.length; col2++) {
-                if (colcounts[col2] !== undefined) {
-                    sum += colcounts[col] * colcounts[col2] * (col2 - col);
-                }
-            }
+    let part1 = 0;
 
-        }
-    }
+    part1 += sumDistances(colcounts, colexpansions, 1);
+    part1 += sumDistances(rowcounts, rowexpansions, 1);
 
-    for (let row = 0; row < rowcounts.length - 1; row++) {
-        if (rowcounts[row] !== undefined) {
-            for (let row2 = row+1; row2 < rowcounts.length; row2++) {
-                if (rowcounts[row2] != undefined) {
-                    sum += rowcounts[row] * rowcounts[row2] * (row2 - row);
-                }
-            }
-        }
-    }
+    let part2 = 0;
 
-    
-    
-    const part1 = sum;
-    const part2 = lines.length;
+    part2 += sumDistances(colcounts, colexpansions, 999_999);
+    part2 += sumDistances(rowcounts, rowexpansions, 999_999);
 
     return [part1, part2];
 }
 
-function expand(arr) {
-    for (let i = arr.length; i >= 0; i--) {
-        if (arr[i] === undefined) {
-            arr.splice(i, 0, undefined);
+function sumDistances(counts, expansions, expansionsize) {
+    let sum = 0;
+
+    for (let i=0; i < counts.length - 1; i++) {
+        if (counts[i] !== undefined) {
+            for (let j = i+1; j < counts.length; j++) {
+                if (counts[j] !== undefined) {
+                    let expansion = 0;
+                    for (let k = i; k<=j; k++) {
+                        if (expansions.includes(k)) {
+                            expansion += expansionsize;
+                        }
+                    }
+
+                    sum += counts[i] * counts[j] * (expansion + j - i);
+                }
+            }
+
         }
     }
+
+    return sum;
+}
+
+
+function calcExpansionPoints(array) {
+    const points = [];
+    for (let i = 0; i<array.length; i++) {
+        if (array[i] === undefined) points.push(i);
+    }
+    return points;
 }
 
 console.log(solve('day11/input.txt'));
