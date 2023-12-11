@@ -103,7 +103,7 @@ export function solve(filename) {
             }
         }
         // uncomment to log the loop to console
-        //console.log(output.join(""));
+        console.log(output.join(""));
     }
 
     const part2 = numInside;
