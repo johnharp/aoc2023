@@ -1,15 +1,54 @@
 import { readLines } from "../util/input.js";
 
+// [ 7927, 0 ]
+
 export function solve(filename) {
     const lines = readLines(filename);
     const grid = newGrid(lines);
 
+    
+    const part1 = calc(grid, newBeam([0, 0], [1, 0]));
+
+    let best = 0;
+    for (let y = 0; y < grid.height; y++) {
+        const leftpos = [0, y];
+        const leftdir = [1, 0];
+        const left = calc(grid, newBeam(leftpos, leftdir));
+
+        const rightpos = [grid.width - 1, y];
+        const rightdir = [-1, 0];
+        const right = calc(grid, newBeam(rightpos, rightdir));
+
+        if (left > best) { best = left; }
+        if (right > best) { best = right; }
+    }
+
+    for (let x = 0; x < grid.width; x++) {
+        const toppos = [x, 0];
+        const topdir = [0, 1];
+        const top = calc(grid, newBeam(toppos, topdir));
+
+        const bottompos = [x, grid.height - 1];
+        const bottomdir = [0, -1];
+        const bottom = calc(grid, newBeam(bottompos, bottomdir));
+
+        if (top > best) { best = top; }
+        if (bottom > best) { best = bottom; }
+    }
+
+    const part2 = best;
+
+
+    return [part1, part2];
+}
+
+function calc(grid, beam) {
     const energized = new Set();
 
     const beams = [];
     const tracedBeams = [];
 
-    beams.push(newBeam([0, 0], [1, 0]));
+    beams.push(beam);
 
     while (beams.length > 0) {
         const beam = beams.shift();
@@ -22,8 +61,7 @@ export function solve(filename) {
         }
     }
 
-    const part1 = energized.size;
-    const part2 = 0;
+    return energized.size;
 
     function trace(beam) {
         // find if any prior tracedBeams have the same start and direction
@@ -126,7 +164,6 @@ export function solve(filename) {
         }
     }
 
-    return [part1, part2];
 }
 
 function newBeam(start, dir) {
