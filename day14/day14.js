@@ -31,12 +31,14 @@ export function solve(filename) {
 
     // 95736
 
-
+    // There must be a better way to do this, but -- ran the upper loop until the list map
+    // of unique load values stabilized.
+    // Then lookedfor one where 1000000000 - the last iteration number - 1 was evenly divisible
+    // by the repeat cycle of the load value.
+    // There were two matching values, one of which was the right answer.
     for (const [key, value] of loads.entries()) {
         if (value.length > 1) {
             const delta = value[value.length-1] - value[value.length-2];
-            const a = 1000000000 - iter;
-            const b = a % delta;
 
             const last = value[value.length-1];
 
