@@ -1,6 +1,6 @@
 import { readLines } from "../util/input.js";
 
-// [ 7927, 0 ]
+// [ 7927, 8246 ]
 
 export function solve(filename) {
     const lines = readLines(filename);
