@@ -1,4 +1,5 @@
 import { readLines } from "../util/input.js";
+console.log(solve("day17/input-sample.txt"));
 
 export function solve(filename) {
     const lines = readLines(filename);
@@ -8,4 +9,3 @@ export function solve(filename) {
     return [part1, part2];
 }
 
-console.log(solve("day17/input-sample.txt"));
